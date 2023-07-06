@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Server", "SimpleStore\Server\SimpleStore.Server.csproj", "{F58B64B2-EF72-4C6D-8700-9FBC8CF715B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Server", "SimpleStore\Server\SimpleStore.Server.csproj", "{F58B64B2-EF72-4C6D-8700-9FBC8CF715B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Client", "SimpleStore\Client\SimpleStore.Client.csproj", "{A4B3A239-E5CF-408B-8C95-1A34B9D22AD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Client", "SimpleStore\Client\SimpleStore.Client.csproj", "{A4B3A239-E5CF-408B-8C95-1A34B9D22AD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Shared", "SimpleStore\Shared\SimpleStore.Shared.csproj", "{0F048B06-2CB7-4B71-9294-089CCD92E691}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Shared", "SimpleStore\Shared\SimpleStore.Shared.csproj", "{0F048B06-2CB7-4B71-9294-089CCD92E691}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00. Fontend", "00. Fontend", "{E172DE75-2BD5-4EE4-B8AA-7CD1EB9A5D0E}"
 EndProject
@@ -19,11 +19,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00. Entities", "00. Entitie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Data Access", "01. Data Access", "{6E268468-D490-4E28-821A-72316034D2B7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Business", "02. Business", "{FDECFB2F-A983-4550-8FDC-3EC5EC1F4D26}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Service", "02. Service", "{FDECFB2F-A983-4550-8FDC-3EC5EC1F4D26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. API Rest", "03. API Rest", "{DA589BFE-6F42-4D56-9C38-1A6C3C0B2B09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Entities", "SimpleStore.Entities\SimpleStore.Entities.csproj", "{26D345DF-D9E3-47EE-B241-739248EFE765}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Entities", "SimpleStore.Entities\SimpleStore.Entities.csproj", "{26D345DF-D9E3-47EE-B241-739248EFE765}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.DataAccess", "SimpleStore.DataAccess\SimpleStore.DataAccess.csproj", "{B8FADE70-78C6-42CB-A702-EE8D6F3CFAFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Services", "SimpleStore.Services\SimpleStore.Services.csproj", "{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Repository", "SimpleStore.Repository\SimpleStore.Repository.csproj", "{CED8F822-6723-45C3-9A70-43A55D1A3553}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,18 @@ Global
 		{26D345DF-D9E3-47EE-B241-739248EFE765}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26D345DF-D9E3-47EE-B241-739248EFE765}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26D345DF-D9E3-47EE-B241-739248EFE765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8FADE70-78C6-42CB-A702-EE8D6F3CFAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8FADE70-78C6-42CB-A702-EE8D6F3CFAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8FADE70-78C6-42CB-A702-EE8D6F3CFAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8FADE70-78C6-42CB-A702-EE8D6F3CFAFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CED8F822-6723-45C3-9A70-43A55D1A3553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED8F822-6723-45C3-9A70-43A55D1A3553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED8F822-6723-45C3-9A70-43A55D1A3553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED8F822-6723-45C3-9A70-43A55D1A3553}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +78,9 @@ Global
 		{FDECFB2F-A983-4550-8FDC-3EC5EC1F4D26} = {0EF4B349-6E07-43FF-B864-6E9FB001A905}
 		{DA589BFE-6F42-4D56-9C38-1A6C3C0B2B09} = {0EF4B349-6E07-43FF-B864-6E9FB001A905}
 		{26D345DF-D9E3-47EE-B241-739248EFE765} = {0E1DBAF4-2DFF-400D-BB65-72B0D6C6CCB7}
+		{B8FADE70-78C6-42CB-A702-EE8D6F3CFAFB} = {6E268468-D490-4E28-821A-72316034D2B7}
+		{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1} = {FDECFB2F-A983-4550-8FDC-3EC5EC1F4D26}
+		{CED8F822-6723-45C3-9A70-43A55D1A3553} = {6E268468-D490-4E28-821A-72316034D2B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F8654E35-7A8D-4110-A22B-73A3A7F48A00}

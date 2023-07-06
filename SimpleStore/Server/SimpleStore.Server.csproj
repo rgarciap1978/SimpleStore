@@ -7,10 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SimpleStore.DataAccess\SimpleStore.DataAccess.csproj" />
+    <ProjectReference Include="..\..\SimpleStore.Entities\SimpleStore.Entities.csproj" />
     <ProjectReference Include="..\Client\SimpleStore.Client.csproj" />
     <ProjectReference Include="..\Shared\SimpleStore.Shared.csproj" />
   </ItemGroup>

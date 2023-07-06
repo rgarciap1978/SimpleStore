@@ -1,8 +1,15 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using SimpleStore.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<SimpleStoreDBContext>(o =>
+{
+    o.UseSqlServer(builder.Configuration.GetConnectionString("SimpleStoreDb"));
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

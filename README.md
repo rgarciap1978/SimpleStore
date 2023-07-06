@@ -1,0 +1,2 @@
+# SimpleStore
+Blazor WebAssembly Project

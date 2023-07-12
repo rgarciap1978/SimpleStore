@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Entities", "Sim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.DataAccess", "SimpleStore.DataAccess\SimpleStore.DataAccess.csproj", "{B8FADE70-78C6-42CB-A702-EE8D6F3CFAFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Services", "SimpleStore.Services\SimpleStore.Services.csproj", "{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Services", "SimpleStore.Services\SimpleStore.Services.csproj", "{BDD2262D-39DF-4BCC-B2A3-BECF25DF27E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleStore.Repository", "SimpleStore.Repository\SimpleStore.Repository.csproj", "{CED8F822-6723-45C3-9A70-43A55D1A3553}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStore.Repository", "SimpleStore.Repository\SimpleStore.Repository.csproj", "{CED8F822-6723-45C3-9A70-43A55D1A3553}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

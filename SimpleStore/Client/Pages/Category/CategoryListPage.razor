@@ -1,0 +1,99 @@
+﻿@page "/category/list"
+
+@inject ProxyCategory ProxyCategory
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
+
+<h3>Categorías</h3>
+
+<button class="btn btn-primary" @onclick="Load">
+    <i class="fa fa-refresh mx-1"></i>Refrescar
+</button>
+
+<button class="btn btn-success" @onclick="Add">
+    <i class="fa fa-plus mx-1"></i>Nuevo
+</button>
+
+<CategoryListComponent @ref="CategoryListComponent" Data="CollectionCategory" OnDelete="OnDelete" OnEdit="OnEdit" OnSearch="OnSearch" >
+    <Empty>
+        <LoadingComponent IsLoading="IsLoading"></LoadingComponent>
+    </Empty>
+</CategoryListComponent>
+<PaginatorComponent @ref="PaginatorComponent" PaginatorData="PagesCategtegory" OnChangePage="OnPageChange" OnChangeSizePage="OnChangeSizePage" />
+
+@code {
+    public ICollection<ResponseCategoryDTO> CollectionCategory { get; set; } = default!;
+    public CategoryListComponent CategoryListComponent { get; set; } = default!;
+    public PaginatorComponent PaginatorComponent { get; set; } = default!;
+    public Pages<ResponseCategoryDTO> PagesCategtegory { get; set; } = default!;
+    public bool IsLoading { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        CollectionCategory = new List<ResponseCategoryDTO>();
+        PagesCategtegory = new Pages<ResponseCategoryDTO>()
+            {
+                CurrentPage = 1,
+                RowsPerPage = 5
+            };
+
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        try
+        {
+            IsLoading = true;
+            var response = await ProxyCategory.ListAsync(CategoryListComponent?.Filter, PagesCategtegory.CurrentPage, PagesCategtegory.RowsPerPage);
+            if (response.Success)
+            {
+                CollectionCategory = response.Data!;
+                PagesCategtegory.Data = CollectionCategory;
+                PagesCategtegory.Count = CollectionCategory.Count;
+                PagesCategtegory.TotalPages = response.Pages;
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task OnSearch()
+    {
+        await Load();
+    }
+
+    private void OnEdit(int id)
+    {
+        NavigationManager.NavigateTo($"/category/edit/{id}");
+    }
+
+    private async Task OnDelete(int id)
+    {
+        await ProxyCategory.DeleteAsync(id);
+        await Load();
+    }
+
+    private async Task OnPageChange()
+    {
+        IsLoading = true;
+        await Load();
+    }
+
+    private async Task OnChangeSizePage()
+    {
+        PaginatorComponent.PaginatorData = PagesCategtegory;
+        await Load();
+    }
+
+    private void Add()
+    {
+        NavigationManager.NavigateTo("/category/create");
+    }
+}

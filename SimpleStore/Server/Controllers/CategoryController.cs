@@ -1,85 +1,53 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using SimpleStore.Services.Interfaces;
+using SimpleStore.Shared.Request;
 
 namespace SimpleStore.Server.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class CategoryController : Controller
     {
+        private readonly ICategoryService _service;
 
-
-        // GET: CategoryController
-        public ActionResult Index()
+        public CategoryController(ICategoryService service)
         {
-            return View();
+            _service = service;
         }
 
-        // GET: CategoryController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public async Task<IActionResult> Get(string? filter, int page = 1, int rows=5)
         {
-            return View();
+            var response = await _service.ListAsync(filter, page, rows);
+            return Ok(response);
         }
 
-        // GET: CategoryController/Create
-        public ActionResult Create()
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
         {
-            return View();
+            var response = await _service.FindByIdAsync(id);
+            return response.Success ? Ok(response) : NotFound(response);
         }
 
-        // POST: CategoryController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Post(RequestCategoryDTO request)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var response = await _service.AddAsync(request);
+            return CreatedAtAction(nameof(Get), new { id = response.Data }, response);
         }
 
-        // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("id:int")]
+        public async Task<IActionResult> Put(int id, RequestCategoryDTO request)
         {
-            return View();
+            var response = await _service.UpdateAsync(id, request);
+            return Ok(response);
         }
 
-        // POST: CategoryController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("id:int")]
+        public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CategoryController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CategoryController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Ok(await _service.DeleteAsync(id));
         }
     }
 }

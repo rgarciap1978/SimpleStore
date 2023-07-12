@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SimpleStore.Entities
+﻿namespace SimpleStore.Entities
 {
     public class EntityBase
     {

@@ -12,5 +12,13 @@ namespace SimpleStore.Services
 
             return message;
         }
+
+        public static int GetPages(int total, int rows)
+        {
+            var totalPages = total / rows;
+            if (total % rows > 0) totalPages++;
+
+            return totalPages;
+        }
     }
 }

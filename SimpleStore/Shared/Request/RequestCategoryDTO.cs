@@ -3,6 +3,6 @@
     public class RequestCategoryDTO
     {
         public string Name { get; set; } = default!;
-        public bool Status { get; set; }
+        public string? Status { get; set; }
     }
 }

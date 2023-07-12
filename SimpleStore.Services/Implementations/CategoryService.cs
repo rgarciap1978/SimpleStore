@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Microsoft.Extensions.Logging;
 using SimpleStore.Entities;
 using SimpleStore.Repository.Interfaces;
 using SimpleStore.Services.Interfaces;
 using SimpleStore.Shared.Request;
 using SimpleStore.Shared.Response;
+using System;
 
 namespace SimpleStore.Services.Implementations
 {
@@ -33,37 +35,94 @@ namespace SimpleStore.Services.Implementations
             {
                 var category = _mapper.Map<Category>(request);
                 await _repository.AddAsync(category);
-                response.Success = true;
                 response.Data = category.Id;
+                response.Success = true;
 
-                _logger.LogInformation("Categoría agregada correctamente");
+                _logger.LogInformation("Concierto agregado correctamente");
             }
             catch (Exception ex)
             {
-                _logger.LogMessage(ex, nameof(AddAsync));
+                response.Message = _logger.LogMessage(ex, nameof(AddAsync));
             }
 
             return response;
         }
 
-        public Task<ResponseBase> DeleteAsync(int id)
+        public async Task<ResponseBase> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = new ResponseBase();
+
+            try
+            {
+                await _repository.DeleteAsync(id);
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = _logger.LogMessage(ex, nameof(DeleteAsync));
+            }
+
+            return response;
         }
 
-        public Task<ResponseGeneric<ResponseCategoryDTO>> GetAsync(int id)
+        public async Task<ResponseGeneric<ResponseCategoryDTO>> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = new ResponseGeneric<ResponseCategoryDTO>();
+
+            try
+            {
+                var category = await _repository.FindAsync(id);
+                if (category == null) throw new ApplicationException("No se encontró la categoría");
+                response.Data = _mapper.Map<ResponseCategoryDTO>(category);
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = _logger.LogMessage(ex, nameof(FindByIdAsync));
+            }
+
+            return response;
         }
 
-        public Task<ResponseGeneric<ICollection<ResponseCategoryDTO>>> ListAsync(string? filter, int page, int rows)
+        public async Task<ResponsePagination<ResponseCategoryDTO>> ListAsync(string? filter, int page, int rows)
         {
-            throw new NotImplementedException();
+            var response = new ResponsePagination<ResponseCategoryDTO>();
+
+            try
+            {
+                var categories = await _repository.ListAsync(filter, page, rows);
+                response.Data = _mapper.Map<ICollection<ResponseCategoryDTO>>(categories.Collection);
+                response.Pages = Utils.GetPages(categories.Total, rows);
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = _logger.LogMessage(ex, nameof(ListAsync));
+            }
+
+            return response;
         }
 
-        public Task<ResponseBase> UpdateAsync(int ind, RequestCategoryDTO t)
+        public async Task<ResponseBase> UpdateAsync(int id, RequestCategoryDTO request)
         {
-            throw new NotImplementedException();
+            var response = new ResponseBase();
+
+            try
+            {
+                var category = await _repository.FindAsync(id);
+                if (category == null) throw new Exception("No se encontró la categoría");
+
+                _mapper.Map(request, category);
+
+                await _repository.UpdateAsync();
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = _logger.LogMessage(ex, nameof(UpdateAsync));
+            }
+
+            return response;
         }
     }
 }

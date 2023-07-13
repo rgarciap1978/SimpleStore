@@ -1,9 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "UXj9TXWG5FhsuG9j5b68+yTdhJ3imEzqTFCHscffQ/wjg/f8rpjsPbmXp1auwuAwseIrKVoe1izNwLC8UrwQZQ==",
+  "dgSpecHash": "g2fnByrClShW+l9EQt7FoxpDj1VsYZTRgXMjcU+BPnuDy7aGfWLqEdyX9ZEsktBBLKU6K++ftO8bSRtTwP3uFA==",
   "success": true,
   "projectFilePath": "C:\\Proyectos\\sources\\SimpleStore\\SimpleStore\\Client\\SimpleStore.Client.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\rogar\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\rogar\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "C:\\Users\\rogar\\.nuget\\packages\\blazored.sessionstorage\\2.3.0\\blazored.sessionstorage.2.3.0.nupkg.sha512",
+    "C:\\Users\\rogar\\.nuget\\packages\\blazored.toast\\4.1.0\\blazored.toast.4.1.0.nupkg.sha512",
+    "C:\\Users\\rogar\\.nuget\\packages\\currietechnologies.razor.sweetalert2\\5.5.0\\currietechnologies.razor.sweetalert2.5.5.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.authorization\\7.0.7\\microsoft.aspnetcore.authorization.7.0.7.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.components\\7.0.7\\microsoft.aspnetcore.components.7.0.7.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\7.0.7\\microsoft.aspnetcore.components.analyzers.7.0.7.nupkg.sha512",
@@ -12,6 +17,7 @@
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\7.0.7\\microsoft.aspnetcore.components.webassembly.7.0.7.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.devserver\\7.0.7\\microsoft.aspnetcore.components.webassembly.devserver.7.0.7.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.metadata\\7.0.7\\microsoft.aspnetcore.metadata.7.0.7.nupkg.sha512",
+    "C:\\Users\\rogar\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.extensions.configuration.binder\\7.0.4\\microsoft.extensions.configuration.binder.7.0.4.nupkg.sha512",
@@ -31,7 +37,7 @@
     "C:\\Users\\rogar\\.nuget\\packages\\system.io.pipelines\\7.0.0\\system.io.pipelines.7.0.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
-    "C:\\Users\\rogar\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.7\\microsoft.netcore.app.runtime.mono.browser-wasm.7.0.7.nupkg.sha512"
+    "C:\\Users\\rogar\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.9\\microsoft.netcore.app.runtime.mono.browser-wasm.7.0.9.nupkg.sha512"
   ],
   "logs": []
 }

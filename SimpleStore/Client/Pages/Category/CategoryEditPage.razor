@@ -1,0 +1,34 @@
+﻿@page "/category/edit/{Id:int}"
+
+@using AutoMapper
+
+@inject HttpClient Http
+@inject IMapper Mapper
+@inject ProxyCategory ProxyCategory
+@inject NavigationManager NavigationManager
+
+<CategoryFormComponent Model="Request" Title="Editar categoría" OnValidSubmit="ValidSumit" OnCancel="Cancel" />
+
+@code {
+    public RequestCategoryDTO Request { get; set; } = new RequestCategoryDTO();
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ProxyCategory.GetByIdAsync(Id);
+        if (response != null) Request = Mapper.Map<RequestCategoryDTO>(response);
+    }
+
+    private async Task ValidSumit()
+    {
+        await ProxyCategory.UpdateAsync(Id, Request);
+        NavigationManager.NavigateTo("/category/list");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/category/list");
+    }
+}

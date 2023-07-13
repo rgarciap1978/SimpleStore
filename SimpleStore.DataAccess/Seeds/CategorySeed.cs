@@ -22,7 +22,7 @@ namespace SimpleStore.DataAccess.Seeds
 
             builder
                 .HasData(
-                new Category() { Id = 1, Name = "Categoria Base", CreatedDate = DateTime.Now, IsDeleted = false }
+                new Category() { Id = 1, Name = "Categoria Base", CreatedDate = DateTime.Now, Status = true }
                 );
         }
     }

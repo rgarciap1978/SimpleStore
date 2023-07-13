@@ -26,7 +26,7 @@ namespace SimpleStore.Repository.Implementations
         {
             var entity = await FindAsync(id);
             if(entity != null) throw new InvalidOperationException($"No se encontró el registro con el Id {id}");
-            entity!.IsDeleted = true;
+            entity!.Status = false;
             await UpdateAsync();
         }
 

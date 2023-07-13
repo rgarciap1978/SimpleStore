@@ -37,14 +37,14 @@ namespace SimpleStore.Server.Controllers
             return CreatedAtAction(nameof(Get), new { id = response.Data }, response);
         }
 
-        [HttpPut("id:int")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, RequestCategoryDTO request)
         {
             var response = await _service.UpdateAsync(id, request);
             return Ok(response);
         }
 
-        [HttpDelete("id:int")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await _service.DeleteAsync(id));

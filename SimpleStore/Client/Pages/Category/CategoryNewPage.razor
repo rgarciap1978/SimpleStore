@@ -1,0 +1,21 @@
+﻿@page "/category/create"
+
+@inject NavigationManager NavigationManager
+@inject ProxyCategory ProxyCategory
+
+<CategoryFormComponent Model="Request" Title="Nueva categoría" OnValidSubmit="ValidSumit" OnCancel="Cancel"  />
+
+@code {
+    public RequestCategoryDTO Request { get; set; } = new RequestCategoryDTO();
+
+    private async Task ValidSumit()
+    {
+        await ProxyCategory.CreateAsync(Request);
+        NavigationManager.NavigateTo("/category/list");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/category/list");
+    }
+}

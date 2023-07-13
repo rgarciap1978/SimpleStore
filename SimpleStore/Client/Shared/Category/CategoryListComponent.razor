@@ -30,13 +30,13 @@
                 {
                     <tr>
                         <td >@item.Name</td>
-                        <td >@item.IsDeleted</td>
+                        <td >@item.StringStatus</td>
                         <td >
                             <button class="btn btn-success" @onclick="() => OnEdit.InvokeAsync(item.Id)">
-                                <i class="fa fa-edit"></i>
+                                Editar
                             </button>
                             <button class="btn btn-danger" @onclick="() => Delete(item.Id)">
-                                <i class="fa fa-remove"></i>
+                                Borrar
                             </button>
                         </td>
                     </tr>

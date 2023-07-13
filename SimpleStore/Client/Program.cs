@@ -3,7 +3,9 @@ using Blazored.Toast;
 using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+
 using SimpleStore.Client;
+using SimpleStore.Client.Profiles;
 using SimpleStore.Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -16,6 +18,9 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(build
 builder.Services.AddScoped<ProxyCategory>();
 
 // MAPPERS
+builder.Services.AddAutoMapper(config => {
+    config.AddProfile<CategoryProfile>();
+});
 
 // COMPONENTS
 builder.Services.AddSweetAlert2();

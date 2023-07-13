@@ -24,7 +24,7 @@ namespace SimpleStore.Client.Services
             return new ResponsePagination<ResponseCategoryDTO>();
         }
 
-        public async Task<ResponseCategoryDTO> GerByIdAsync(int id) {
+        public async Task<ResponseCategoryDTO> GetByIdAsync(int id) {
             var response = await _httpClient.GetFromJsonAsync<ResponseGeneric<ResponseCategoryDTO>>($"api/Category/{id}");
             if (response!.Success) return response.Data!;
 

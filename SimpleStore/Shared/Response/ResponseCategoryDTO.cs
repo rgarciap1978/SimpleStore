@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
-        public string? IsDeleted { get; set; }
+        public bool Status { get; set; }
+        public string StringStatus => Status ? "Activo" : "Inactivo";
     }
 }

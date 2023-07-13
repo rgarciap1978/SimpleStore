@@ -20,25 +20,41 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Category/CategoryEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlcQ2F0ZWdvcnlFZGl0UGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Category/CategoryListPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlcQ2F0ZWdvcnlMaXN0UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Category/CategoryNewPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlcQ2F0ZWdvcnlOZXdQYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/SurveyPrompt.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Category/CategoryFormComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENhdGVnb3J5XENhdGVnb3J5Rm9ybUNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Category/CategoryListComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENhdGVnb3J5XENhdGVnb3J5TGlzdENvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/PaginatorComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBhZ2luYXRvckNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/LoadingComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvYWRpbmdDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-akl9qpwj1q
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=

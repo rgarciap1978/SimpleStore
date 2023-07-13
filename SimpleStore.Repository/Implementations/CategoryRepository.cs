@@ -20,7 +20,7 @@ namespace SimpleStore.Repository.Implementations
                 {
                     Id = predicado.Id,
                     Name = predicado.Name,
-                    IsDeleted = predicado.IsDeleted ? "Eliminado" : ""
+                    Status = predicado.Status 
                 },
                 orden => orden.Name,
                 page,

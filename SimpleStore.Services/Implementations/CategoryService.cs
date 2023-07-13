@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Microsoft.Extensions.Logging;
 using SimpleStore.Entities;
 using SimpleStore.Repository.Interfaces;
 using SimpleStore.Services.Interfaces;
 using SimpleStore.Shared.Request;
 using SimpleStore.Shared.Response;
-using System;
 
 namespace SimpleStore.Services.Implementations
 {
@@ -34,6 +32,7 @@ namespace SimpleStore.Services.Implementations
             try
             {
                 var category = _mapper.Map<Category>(request);
+                category.CreatedDate = DateTime.Now;
                 await _repository.AddAsync(category);
                 response.Data = category.Id;
                 response.Success = true;
@@ -71,8 +70,7 @@ namespace SimpleStore.Services.Implementations
 
             try
             {
-                var category = await _repository.FindAsync(id);
-                if (category == null) throw new ApplicationException("No se encontró la categoría");
+                var category = await _repository.FindAsync(id) ?? throw new ApplicationException("No se encontró la categoría");
                 response.Data = _mapper.Map<ResponseCategoryDTO>(category);
                 response.Success = true;
             }
@@ -90,9 +88,9 @@ namespace SimpleStore.Services.Implementations
 
             try
             {
-                var categories = await _repository.ListAsync(filter, page, rows);
-                response.Data = _mapper.Map<ICollection<ResponseCategoryDTO>>(categories.Collection);
-                response.Pages = Utils.GetPages(categories.Total, rows);
+                var (Collection, Total) = await _repository.ListAsync(filter, page, rows);
+                response.Data = _mapper.Map<ICollection<ResponseCategoryDTO>>(Collection);
+                response.Pages = Utils.GetPages(Total, rows);
                 response.Success = true;
             }
             catch (Exception ex)
@@ -109,11 +107,9 @@ namespace SimpleStore.Services.Implementations
 
             try
             {
-                var category = await _repository.FindAsync(id);
-                if (category == null) throw new Exception("No se encontró la categoría");
-
+                var category = await _repository.FindAsync(id) ?? throw new Exception("No se encontró la categoría");
                 _mapper.Map(request, category);
-
+                category.ModifiedDate = DateTime.Now;
                 await _repository.UpdateAsync();
                 response.Success = true;
             }

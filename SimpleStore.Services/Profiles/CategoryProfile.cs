@@ -9,17 +9,16 @@ namespace SimpleStore.Services.Profiles
     public class CategoryProfile : Profile
     {
         public CategoryProfile() {
-
             CreateMap<CategoryInfo, ResponseCategoryDTO>();
 
-            CreateMap<ResponseCategoryDTO, Category>()
+            CreateMap<RequestCategoryDTO, Category>()
+                .ForMember(d => d.Name, o => o.MapFrom(d => d.Name))
+                .ForMember(d => d.Status, o => o.MapFrom(_ => true));
+
+            CreateMap<Category, ResponseCategoryDTO>()
                 .ForMember(d => d.Id, o => o.MapFrom(d => d.Id))
                 .ForMember(d => d.Name, o => o.MapFrom(d => d.Name))
-                .ForMember(d => d.IsDeleted, o => o.MapFrom(_ => false));
-
-            CreateMap<Category, RequestCategoryDTO>()
-                .ForMember(d => d.Name, o => o.MapFrom(d => d.Name))
-                .ForMember(d => d.Status, o => o.MapFrom(d => d.IsDeleted ? "Eliminador" : ""));
+                .ForMember(d => d.StringStatus, o => o.MapFrom(d => d.Status ? "Activo" : "Inactivo"));
         }
     }
 }

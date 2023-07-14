@@ -1,6 +1,6 @@
 ﻿namespace SimpleStore.Shared.Response
 {
-    public class ResponseCategoryDTO
+    public class ResponseDTOCategory
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

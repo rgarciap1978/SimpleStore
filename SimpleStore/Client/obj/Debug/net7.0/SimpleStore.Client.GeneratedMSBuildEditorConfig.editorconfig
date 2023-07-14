@@ -36,6 +36,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Product/ProductEditPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxQcm9kdWN0RWRpdFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Product/ProductListPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxQcm9kdWN0TGlzdFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Product/ProductNewPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxQcm9kdWN0TmV3UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Category/CategoryFormComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENhdGVnb3J5XENhdGVnb3J5Rm9ybUNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -46,6 +58,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/PaginatorComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBhZ2luYXRvckNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Product/ProductFormComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFByb2R1Y3RcUHJvZHVjdEZvcm1Db21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Product/ProductListComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFByb2R1Y3RcUHJvZHVjdExpc3RDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/_Imports.razor]

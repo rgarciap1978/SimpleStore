@@ -24,9 +24,11 @@ namespace SimpleStore.Repository.Implementations
 
         public virtual async Task DeleteAsync(int id)
         {
-            var entity = await FindAsync(id);
-            if(entity != null) throw new InvalidOperationException($"No se encontró el registro con el Id {id}");
-            entity!.Status = false;
+            var entity = await FindAsync(id) ?? throw new InvalidOperationException($"No se encontró el registro con el Id {id}");
+            entity.IsDeleted = true;
+            entity.Status = false;
+            entity.DeletedDate = DateTime.Now;
+
             await UpdateAsync();
         }
 

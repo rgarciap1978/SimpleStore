@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Azure;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SimpleStore.Services.Interfaces;
 using SimpleStore.Shared.Request;
@@ -17,10 +18,9 @@ namespace SimpleStore.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string? filter, int page = 1, int rows=5)
+        public async Task<IActionResult> Get(string? filter, int page = 1, int rows = 5)
         {
-            var response = await _service.ListAsync(filter, page, rows);
-            return Ok(response);
+            return Ok(await _service.ListAsync(filter, page, rows));
         }
 
         [HttpGet("{id:int}")]
@@ -31,17 +31,16 @@ namespace SimpleStore.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(RequestCategoryDTO request)
+        public async Task<IActionResult> Post(RequestDTOCategory request)
         {
             var response = await _service.AddAsync(request);
             return CreatedAtAction(nameof(Get), new { id = response.Data }, response);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, RequestCategoryDTO request)
+        public async Task<IActionResult> Put(int id, RequestDTOCategory request)
         {
-            var response = await _service.UpdateAsync(id, request);
-            return Ok(response);
+            return Ok(await _service.UpdateAsync(id, request));
         }
 
         [HttpDelete("{id:int}")]

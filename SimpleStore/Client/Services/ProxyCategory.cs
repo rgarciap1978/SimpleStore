@@ -15,24 +15,24 @@ namespace SimpleStore.Client.Services
             _logger = logger;
         }
 
-        public async Task<ResponsePagination<ResponseCategoryDTO>> ListAsync(string? filter, int page, int rows)
+        public async Task<ResponsePagination<ResponseDTOCategory>> ListAsync(string? filter, int page, int rows)
         {
-            var response = await _httpClient.GetFromJsonAsync<ResponsePagination<ResponseCategoryDTO>>($"api/Category?filter={filter ?? string.Empty}&page={page}&rows={rows}");
+            var response = await _httpClient.GetFromJsonAsync<ResponsePagination<ResponseDTOCategory>>($"api/Category?filter={filter ?? string.Empty}&page={page}&rows={rows}");
             if (response!.Success) return response;
 
             _logger.LogError($"Error getting Categories: {response.Message}");
-            return new ResponsePagination<ResponseCategoryDTO>();
+            return new ResponsePagination<ResponseDTOCategory>();
         }
 
-        public async Task<ResponseCategoryDTO> GetByIdAsync(int id) {
-            var response = await _httpClient.GetFromJsonAsync<ResponseGeneric<ResponseCategoryDTO>>($"api/Category/{id}");
+        public async Task<ResponseDTOCategory> GetByIdAsync(int id) {
+            var response = await _httpClient.GetFromJsonAsync<ResponseGeneric<ResponseDTOCategory>>($"api/Category/{id}");
             if (response!.Success) return response.Data!;
 
             _logger.LogError($"Error getting Category: {response.Message}");
-            return new ResponseCategoryDTO();
+            return new ResponseDTOCategory();
         }
 
-        public async Task CreateAsync(RequestCategoryDTO request)
+        public async Task CreateAsync(RequestDTOCategory request)
         {
             var response = await _httpClient.PostAsJsonAsync("api/Category", request);
             if (response.IsSuccessStatusCode) return;
@@ -40,7 +40,7 @@ namespace SimpleStore.Client.Services
             _logger.LogError($"Error getting Categories: {response.ReasonPhrase}");
         }
 
-        public async Task UpdateAsync(int id, RequestCategoryDTO request)
+        public async Task UpdateAsync(int id, RequestDTOCategory request)
         {
             var response = await _httpClient.PutAsJsonAsync($"api/Category/{id}", request);
             if (response.IsSuccessStatusCode) return;

@@ -25,7 +25,7 @@ namespace SimpleStore.Services.Implementations
             _mapper = mapper;
         }
 
-        public async Task<ResponseGeneric<int>> AddAsync(RequestCategoryDTO request)
+        public async Task<ResponseGeneric<int>> AddAsync(RequestDTOCategory request)
         {
             var response = new ResponseGeneric<int>();
 
@@ -64,14 +64,14 @@ namespace SimpleStore.Services.Implementations
             return response;
         }
 
-        public async Task<ResponseGeneric<ResponseCategoryDTO>> FindByIdAsync(int id)
+        public async Task<ResponseGeneric<ResponseDTOCategory>> FindByIdAsync(int id)
         {
-            var response = new ResponseGeneric<ResponseCategoryDTO>();
+            var response = new ResponseGeneric<ResponseDTOCategory>();
 
             try
             {
                 var category = await _repository.FindAsync(id) ?? throw new ApplicationException("No se encontró la categoría");
-                response.Data = _mapper.Map<ResponseCategoryDTO>(category);
+                response.Data = _mapper.Map<ResponseDTOCategory>(category);
                 response.Success = true;
             }
             catch (Exception ex)
@@ -82,14 +82,14 @@ namespace SimpleStore.Services.Implementations
             return response;
         }
 
-        public async Task<ResponsePagination<ResponseCategoryDTO>> ListAsync(string? filter, int page, int rows)
+        public async Task<ResponsePagination<ResponseDTOCategory>> ListAsync(string? filter, int page, int rows)
         {
-            var response = new ResponsePagination<ResponseCategoryDTO>();
+            var response = new ResponsePagination<ResponseDTOCategory>();
 
             try
             {
                 var (Collection, Total) = await _repository.ListAsync(filter, page, rows);
-                response.Data = _mapper.Map<ICollection<ResponseCategoryDTO>>(Collection);
+                response.Data = _mapper.Map<ICollection<ResponseDTOCategory>>(Collection);
                 response.Pages = Utils.GetPages(Total, rows);
                 response.Success = true;
             }
@@ -101,7 +101,7 @@ namespace SimpleStore.Services.Implementations
             return response;
         }
 
-        public async Task<ResponseBase> UpdateAsync(int id, RequestCategoryDTO request)
+        public async Task<ResponseBase> UpdateAsync(int id, RequestDTOCategory request)
         {
             var response = new ResponseBase();
 

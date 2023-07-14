@@ -8,14 +8,15 @@ namespace SimpleStore.Services.Profiles
 {
     public class CategoryProfile : Profile
     {
-        public CategoryProfile() {
-            CreateMap<CategoryInfo, ResponseCategoryDTO>();
+        public CategoryProfile()
+        {
+            CreateMap<CategoryInfo, ResponseDTOCategory>();
 
-            CreateMap<RequestCategoryDTO, Category>()
+            CreateMap<RequestDTOCategory, Category>()
                 .ForMember(d => d.Name, o => o.MapFrom(d => d.Name))
-                .ForMember(d => d.Status, o => o.MapFrom(_ => true));
+                .ForMember(d => d.Status, o => o.MapFrom(d => d.Status));
 
-            CreateMap<Category, ResponseCategoryDTO>()
+            CreateMap<Category, ResponseDTOCategory>()
                 .ForMember(d => d.Id, o => o.MapFrom(d => d.Id))
                 .ForMember(d => d.Name, o => o.MapFrom(d => d.Name))
                 .ForMember(d => d.StringStatus, o => o.MapFrom(d => d.Status ? "Activo" : "Inactivo"));

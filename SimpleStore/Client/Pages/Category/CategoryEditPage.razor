@@ -10,7 +10,7 @@
 <CategoryFormComponent Model="Request" Title="Editar categoría" OnValidSubmit="ValidSumit" OnCancel="Cancel" />
 
 @code {
-    public RequestCategoryDTO Request { get; set; } = new RequestCategoryDTO();
+    public RequestDTOCategory Request { get; set; } = new RequestDTOCategory();
 
     [Parameter]
     public int Id { get; set; }
@@ -18,7 +18,7 @@
     protected override async Task OnInitializedAsync()
     {
         var response = await ProxyCategory.GetByIdAsync(Id);
-        if (response != null) Request = Mapper.Map<RequestCategoryDTO>(response);
+        if (response != null) Request = Mapper.Map<RequestDTOCategory>(response);
     }
 
     private async Task ValidSumit()

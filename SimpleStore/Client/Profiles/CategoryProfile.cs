@@ -7,7 +7,7 @@ namespace SimpleStore.Client.Profiles
     public class CategoryProfile : Profile
     {
         public CategoryProfile() {
-            CreateMap<ResponseCategoryDTO, RequestCategoryDTO>();
+            CreateMap<ResponseDTOCategory, RequestDTOCategory>();
         }
     }
 }

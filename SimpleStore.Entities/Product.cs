@@ -1,6 +1,6 @@
 ﻿namespace SimpleStore.Entities
 {
-    public class Product : EntityBase
+    public class Product : BaseEntity
     {
         public string SkuCode { get; set; } = default!;
         public string Name { get; set; } = default!;

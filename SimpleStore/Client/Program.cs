@@ -16,10 +16,12 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(build
 
 // PROXIES
 builder.Services.AddScoped<ProxyCategory>();
+builder.Services.AddScoped<ProxyProduct>();
 
 // MAPPERS
 builder.Services.AddAutoMapper(config => {
     config.AddProfile<CategoryProfile>();
+    config.AddProfile<ProductProfile>();
 });
 
 // COMPONENTS

@@ -1,6 +1,6 @@
 ﻿namespace SimpleStore.Entities
 {
-    public class EntityBase
+    public class BaseEntity
     {
         public int Id { get; set; }
         public bool Status { get; set; }
@@ -9,7 +9,7 @@
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
-        public EntityBase()
+        public BaseEntity()
         {
             Status = true;
             IsDeleted = false;

@@ -29,12 +29,15 @@
     public string Title { get; set; } = "Nueva categría";
 
     [Parameter]
+    [EditorRequired]
     public RequestDTOCategory Model { get; set; } = new RequestDTOCategory();
 
     [Parameter]
+    [EditorRequired]
     public EventCallback OnValidSubmit { get; set; }
 
     [Parameter]
+    [EditorRequired]
     public EventCallback OnCancel { get; set; }
 
     public void ValidSubmit()

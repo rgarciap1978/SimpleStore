@@ -1,6 +1,6 @@
 ﻿namespace SimpleStore.Entities
 {
-    public class Customer : EntityBase
+    public class Customer : BaseEntity
     {
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;

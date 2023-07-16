@@ -1,10 +1,10 @@
-﻿@page "/category/list"
+﻿@page "/product/list"
 
-@inject ProxyCategory ProxyCategory
+@inject ProxyProduct ProxyProduct
 @inject NavigationManager NavigationManager
 @inject IToastService ToastService
 
-<h3>Categorías</h3>
+<h3>Productos</h3>
 
 <button class="btn btn-success" @onclick="Add">
     Nuevo
@@ -13,24 +13,24 @@
     <i class="oi oi-reload" />
 </button>
 
-<CategoryListComponent @ref="CategoryListComponent" Data="CollectionCategory" OnDelete="OnDelete" OnEdit="OnEdit" OnSearch="OnSearch">
+<ProductListComponent @ref="ProductListComponent" Data="CollectionProduct" OnDelete="OnDelete" OnEdit="OnEdit" OnSearch="OnSearch">
     <Empty>
         <LoadingComponent IsLoading="IsLoading"></LoadingComponent>
     </Empty>
-</CategoryListComponent>
-<PaginatorComponent @ref="PaginatorComponent" PaginatorData="PagesCategtegory" OnChangePage="OnPageChange" OnChangeSizePage="OnChangeSizePage" />
+</ProductListComponent>
+<PaginatorComponent @ref="PaginatorComponent" PaginatorData="PagesProduct" OnChangePage="OnPageChange" OnChangeSizePage="OnChangeSizePage" />
 
 @code {
-    public ICollection<ResponseDTOCategory> CollectionCategory { get; set; } = default!;
-    public CategoryListComponent CategoryListComponent { get; set; } = default!;
+    public ICollection<ResponseDTOProduct> CollectionProduct { get; set; } = default!;
+    public ProductListComponent ProductListComponent { get; set; } = default!;
     public PaginatorComponent PaginatorComponent { get; set; } = default!;
-    public Pages<ResponseDTOCategory> PagesCategtegory { get; set; } = default!;
+    public Pages<ResponseDTOProduct> PagesProduct { get; set; } = default!;
     public bool IsLoading { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        CollectionCategory = new List<ResponseDTOCategory>();
-        PagesCategtegory = new Pages<ResponseDTOCategory>()
+        CollectionProduct = new List<ResponseDTOProduct>();
+        PagesProduct = new Pages<ResponseDTOProduct>()
             {
                 CurrentPage = 1,
                 RowsPerPage = 5
@@ -44,13 +44,13 @@
         try
         {
             IsLoading = true;
-            var response = await ProxyCategory.ListAsync(CategoryListComponent?.Filter, PagesCategtegory.CurrentPage, PagesCategtegory.RowsPerPage);
+            var response = await ProxyProduct.ListAsync(ProductListComponent?.Filter, PagesProduct.CurrentPage, PagesProduct.RowsPerPage);
             if (response.Success)
             {
-                CollectionCategory = response.Data!;
-                PagesCategtegory.Data = CollectionCategory;
-                PagesCategtegory.Count = CollectionCategory.Count;
-                PagesCategtegory.TotalPages = response.Pages;
+                CollectionProduct = response.Data!;
+                PagesProduct.Data = CollectionProduct;
+                PagesProduct.Count = CollectionProduct.Count;
+                PagesProduct.TotalPages = response.Pages;
             }
         }
         catch (Exception ex)
@@ -70,12 +70,12 @@
 
     private void OnEdit(int id)
     {
-        NavigationManager.NavigateTo($"/category/edit/{id}");
+        NavigationManager.NavigateTo($"/product/edit/{id}");
     }
 
     private async Task OnDelete(int id)
     {
-        await ProxyCategory.DeleteAsync(id);
+        //await ProxyProduct.DeleteAsync(id);
         await Load();
     }
 
@@ -87,12 +87,12 @@
 
     private async Task OnChangeSizePage()
     {
-        PaginatorComponent.PaginatorData = PagesCategtegory;
+        PaginatorComponent.PaginatorData = PagesProduct;
         await Load();
     }
 
     private void Add()
     {
-        NavigationManager.NavigateTo("/category/create");
+        NavigationManager.NavigateTo("/product/create");
     }
 }

@@ -37,7 +37,7 @@ namespace SimpleStore.Services.Implementations
                 response.Data = category.Id;
                 response.Success = true;
 
-                _logger.LogInformation("Concierto agregado correctamente");
+                _logger.LogInformation("Categoría agregada correctamente");
             }
             catch (Exception ex)
             {
@@ -98,6 +98,26 @@ namespace SimpleStore.Services.Implementations
                 response.Message = _logger.LogMessage(ex, nameof(ListAsync));
             }
 
+            return response;
+        }
+
+        public async Task<ResponseGeneric<ICollection<ResponseDTOCategory>>> ListAsync()
+        {
+            var response = new ResponseGeneric<ICollection<ResponseDTOCategory>>();
+            try
+            {
+                var categories = await _repository.ListAsync();
+                response.Data = _mapper.Map<ICollection<ResponseDTOCategory>>(categories);
+                response.Success = true;
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Error al listar las categorías";
+                _logger.LogError(ex, $"{response.Message} {ex.Message}");
+            }
             return response;
         }
 

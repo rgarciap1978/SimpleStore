@@ -48,15 +48,19 @@
 
 @code {
     [Parameter]
+    [EditorRequired]
     public ICollection<ResponseDTOCategory>? Data { get; set; }
 
     [Parameter]
+    [EditorRequired]
     public EventCallback OnSearch { get; set; }
 
     [Parameter]
+    [EditorRequired]
     public EventCallback<int> OnEdit { get; set; }
 
     [Parameter]
+    [EditorRequired]
     public EventCallback<int> OnDelete { get; set; }
 
     [Parameter]

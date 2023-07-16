@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SimpleStore.DataAccess;
+﻿using SimpleStore.DataAccess;
 using SimpleStore.Entities;
 using SimpleStore.Entities.Infos;
 using SimpleStore.Repository.Interfaces;
@@ -8,7 +7,7 @@ namespace SimpleStore.Repository.Implementations
 {
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
-        protected ProductRepository(SimpleStoreDBContext context) 
+        public ProductRepository(SimpleStoreDBContext context) 
             : base(context)
         {
         }

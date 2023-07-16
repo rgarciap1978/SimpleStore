@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace SimpleStore.Repository.Implementations
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBase
+    public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseEntity
     {
         protected readonly DbContext _context;
 

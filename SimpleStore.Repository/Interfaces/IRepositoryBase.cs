@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace SimpleStore.Repository.Interfaces
 {
-    public interface IRepositoryBase<T> where T : EntityBase
+    public interface IRepositoryBase<T> where T : BaseEntity
     {
         Task<ICollection<T>> ListAsync(Expression<Func<T, bool>> predicate);
 

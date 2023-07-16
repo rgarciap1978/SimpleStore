@@ -1,6 +1,6 @@
 ﻿namespace SimpleStore.Entities
 {
-    public class SalesDetail : EntityBase
+    public class SalesDetail : BaseEntity
     {
         public int Correlative { get; set; } = default!;
         public decimal UnitPrice { get; set; } = default!;

@@ -17,10 +17,6 @@ namespace SimpleStore.DataAccess.Seeds
                 .HasMaxLength(150);
 
             builder
-                .Property(f => f.CreatedDate)
-                .HasDefaultValueSql("getdate()");
-
-            builder
                 .HasData(
                 new Category() { Id = 1, Name = "Categoria Base", CreatedDate = DateTime.Now, Status = true }
                 );

@@ -18,19 +18,19 @@
         <LoadingComponent IsLoading="IsLoading"></LoadingComponent>
     </Empty>
 </CategoryListComponent>
-<PaginatorComponent @ref="PaginatorComponent" PaginatorData="PagesCategtegory" OnChangePage="OnPageChange" OnChangeSizePage="OnChangeSizePage" />
+<PaginatorComponent @ref="PaginatorComponent" PaginatorData="PagesCategory" OnChangePage="OnPageChange" OnChangeSizePage="OnChangeSizePage" />
 
 @code {
     public ICollection<ResponseDTOCategory> CollectionCategory { get; set; } = default!;
     public CategoryListComponent CategoryListComponent { get; set; } = default!;
     public PaginatorComponent PaginatorComponent { get; set; } = default!;
-    public Pages<ResponseDTOCategory> PagesCategtegory { get; set; } = default!;
+    public Pages<ResponseDTOCategory> PagesCategory { get; set; } = default!;
     public bool IsLoading { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         CollectionCategory = new List<ResponseDTOCategory>();
-        PagesCategtegory = new Pages<ResponseDTOCategory>()
+        PagesCategory = new Pages<ResponseDTOCategory>()
             {
                 CurrentPage = 1,
                 RowsPerPage = 5
@@ -44,13 +44,13 @@
         try
         {
             IsLoading = true;
-            var response = await ProxyCategory.ListAsync(CategoryListComponent?.Filter, PagesCategtegory.CurrentPage, PagesCategtegory.RowsPerPage);
+            var response = await ProxyCategory.ListAsync(CategoryListComponent?.Filter, PagesCategory.CurrentPage, PagesCategory.RowsPerPage);
             if (response.Success)
             {
                 CollectionCategory = response.Data!;
-                PagesCategtegory.Data = CollectionCategory;
-                PagesCategtegory.Count = CollectionCategory.Count;
-                PagesCategtegory.TotalPages = response.Pages;
+                PagesCategory.Data = CollectionCategory;
+                PagesCategory.Count = CollectionCategory.Count;
+                PagesCategory.TotalPages = response.Pages;
             }
         }
         catch (Exception ex)
@@ -87,7 +87,7 @@
 
     private async Task OnChangeSizePage()
     {
-        PaginatorComponent.PaginatorData = PagesCategtegory;
+        PaginatorComponent.PaginatorData = PagesCategory;
         await Load();
     }
 

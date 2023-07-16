@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleStore.DataAccess;
 
@@ -11,9 +12,11 @@ using SimpleStore.DataAccess;
 namespace SimpleStore.DataAccess.Migrations
 {
     [DbContext(typeof(SimpleStoreDBContext))]
-    partial class SimpleStoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230715064149_RecrearModelo")]
+    partial class RecrearModelo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

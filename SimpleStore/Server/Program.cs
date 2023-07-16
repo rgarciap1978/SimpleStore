@@ -17,10 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 var logger = new LoggerConfiguration()
     .WriteTo.Console(LogEventLevel.Information)
     .WriteTo.File(
-        "..\\musicstorage_.log",
+        "..\\simplestore_.log",
         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message:lj}{NewLine}{Exception}",
         rollingInterval: RollingInterval.Day,
-        restrictedToMinimumLevel: LogEventLevel.Warning
+        restrictedToMinimumLevel: LogEventLevel.Error
     )
     .WriteTo.MSSqlServer(
         builder.Configuration.GetConnectionString("SimpleStoreDb"),
@@ -50,14 +50,17 @@ builder.Services.AddDbContext<SimpleStoreDBContext>(options =>
 
 // REPOSITORIES
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
 // SERVICES
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IProductService, ProductService>();
 
 // MAPPERS
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile<CategoryProfile>();
+    config.AddProfile<ProductProfile>();
 });
 
 builder.Services.AddControllersWithViews();

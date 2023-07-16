@@ -1,5 +1,28 @@
-﻿<h3>ProductNewPage</h3>
+﻿@page "/product/create"
+
+@inject NavigationManager NavigationManager
+@inject ProxyProduct ProxyProduct
+@inject ProxyCategory ProxyCategory
+
+<ProductFormComponent Categories="Categories" Model="Request" OnCancel="Cancel" OnValidSubmit="ValidSubmit" Title="Nuevo producto" ></ProductFormComponent>
 
 @code {
+    public RequestDTOProduct Request { get; set; } = new RequestDTOProduct();
+    public ICollection<ResponseDTOCategory> Categories { get; set; } = new List<ResponseDTOCategory>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        Categories = await ProxyCategory.ListAsync();
+    }
+
+    private async Task ValidSubmit()
+    {
+        await ProxyProduct.CreateAsync(Request);
+        NavigationManager.NavigateTo("/product/list");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/product/list");
+    }
 }

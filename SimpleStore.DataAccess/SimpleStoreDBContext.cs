@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleStore.DataAccess.Seeds;
 using SimpleStore.Entities;
+using System.Reflection;
 
 namespace SimpleStore.DataAccess
 {
@@ -13,7 +14,7 @@ namespace SimpleStore.DataAccess
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CategorySeed());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

@@ -27,5 +27,13 @@ namespace SimpleStore.Repository.Implementations
                 rows
                 );
         }
+
+        public async Task<ICollection<Category>> ListAsync()
+        {
+            return await _context.Set<Category>()
+                .Where(w => !w.IsDeleted)
+                .AsNoTracking()
+                .ToListAsync();
+        }
     }
 }

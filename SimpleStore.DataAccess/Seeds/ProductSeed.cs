@@ -17,6 +17,15 @@ namespace SimpleStore.DataAccess.Seeds
                 .HasMaxLength(150);
 
             builder
+                .Property(f => f.UnitPrice)
+                .HasPrecision(10, 2);
+
+            builder
+                .Property(f=>f.Image)
+                .IsUnicode(false)
+                .HasMaxLength(1000);
+
+            builder
                 .Property(f => f.CreatedDate)
                 .HasDefaultValueSql("getdate()");
 

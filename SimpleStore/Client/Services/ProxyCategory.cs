@@ -15,6 +15,15 @@ namespace SimpleStore.Client.Services
             _logger = logger;
         }
 
+        public async Task<ICollection<ResponseDTOCategory>> ListAsync()
+        {
+            var response = await _httpClient.GetFromJsonAsync<ResponseGeneric<ICollection<ResponseDTOCategory>>>($"api/Category/all");
+            if (response!.Success) return response.Data!;
+
+            _logger.LogError($"Error getting Categories: {response.Message}");
+            return new List<ResponseDTOCategory>();
+        }
+
         public async Task<ResponsePagination<ResponseDTOCategory>> ListAsync(string? filter, int page, int rows)
         {
             var response = await _httpClient.GetFromJsonAsync<ResponsePagination<ResponseDTOCategory>>($"api/Category?filter={filter ?? string.Empty}&page={page}&rows={rows}");
@@ -37,7 +46,7 @@ namespace SimpleStore.Client.Services
             var response = await _httpClient.PostAsJsonAsync("api/Category", request);
             if (response.IsSuccessStatusCode) return;
 
-            _logger.LogError($"Error getting Categories: {response.ReasonPhrase}");
+            _logger.LogError($"Error creating Category: {response.ReasonPhrase}");
         }
 
         public async Task UpdateAsync(int id, RequestDTOCategory request)
@@ -45,7 +54,7 @@ namespace SimpleStore.Client.Services
             var response = await _httpClient.PutAsJsonAsync($"api/Category/{id}", request);
             if (response.IsSuccessStatusCode) return;
 
-            _logger.LogError($"Error updating Categories: {response.ReasonPhrase}");
+            _logger.LogError($"Error updating Category: {response.ReasonPhrase}");
         }
 
         public async Task DeleteAsync(int id)
@@ -53,7 +62,7 @@ namespace SimpleStore.Client.Services
             var response = await _httpClient.DeleteAsync($"api/Category/{id}");
             if (response.IsSuccessStatusCode) return;
 
-            _logger.LogError($"Error updating Categories: {response.ReasonPhrase}");
+            _logger.LogError($"Error deleting Category: {response.ReasonPhrase}");
         }
     }
 }

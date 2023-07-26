@@ -11,16 +11,19 @@ namespace SimpleStore.Services.Implementations
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repository;
+        private readonly IFileUploader _fileUploader;
         private readonly ILogger<ProductService> _logger;
         private readonly IMapper _mapper;
 
         public ProductService(
             IProductRepository repository,
+            IFileUploader fileUploader,
             ILogger<ProductService> logger,
             IMapper mapper
             )
         {
             _repository = repository;
+            _fileUploader = fileUploader;
             _logger = logger;
             _mapper = mapper;
         }
@@ -32,6 +35,8 @@ namespace SimpleStore.Services.Implementations
             {
                 var product = _mapper.Map<Product>(request);
                 product.CreatedDate = DateTime.Now;
+                product.Image = await _fileUploader.UploadFileAsync(request.Base64Image, request.FileName);
+                
                 await _repository.AddAsync(product);
                 response.Data = product.Id;
                 response.Success = true;
@@ -78,6 +83,23 @@ namespace SimpleStore.Services.Implementations
             return response;
         }
 
+        public async Task<ResponsePagination<ResponseDTOProduct>> ListAsync(int id)
+        {
+            var response = new ResponsePagination<ResponseDTOProduct>();
+            try
+            {
+                var products = await _repository.ListByCategoryAsync(id);
+                response.Data = _mapper.Map<ICollection<ResponseDTOProduct>>(products);
+                response.Pages = 0;
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = _logger.LogMessage(ex, nameof(ListAsync));
+            }
+            return response;
+        }
+
         public async Task<ResponsePagination<ResponseDTOProduct>> ListAsync(string? filter, int page, int rows)
         {
             var response = new ResponsePagination<ResponseDTOProduct>();
@@ -101,6 +123,13 @@ namespace SimpleStore.Services.Implementations
             try
             {
                 var product = await _repository.FindAsync(id) ?? throw new ApplicationException("No se encontró el producto");
+                
+                if (!string.IsNullOrWhiteSpace(request.FileName))
+                {
+                    product.Image = await _fileUploader.UploadFileAsync(request.Base64Image, request.FileName);
+                    request.Image = product.Image;
+                }
+
                 _mapper.Map(request, product);
                 product.ModifiedDate = DateTime.Now;
                 await _repository.UpdateAsync();

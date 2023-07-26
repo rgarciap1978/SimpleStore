@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SimpleStore.DataAccess\SimpleStore.DataAccess.csproj" />
     <ProjectReference Include="..\SimpleStore.Entities\SimpleStore.Entities.csproj" />
+    <ProjectReference Include="..\SimpleStore\Shared\SimpleStore.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -188,6 +188,9 @@
               },
               "C:\\Proyectos\\sources\\SimpleStore\\SimpleStore.Entities\\SimpleStore.Entities.csproj": {
                 "projectPath": "C:\\Proyectos\\sources\\SimpleStore\\SimpleStore.Entities\\SimpleStore.Entities.csproj"
+              },
+              "C:\\Proyectos\\sources\\SimpleStore\\SimpleStore\\Shared\\SimpleStore.Shared.csproj": {
+                "projectPath": "C:\\Proyectos\\sources\\SimpleStore\\SimpleStore\\Shared\\SimpleStore.Shared.csproj"
               }
             }
           }
@@ -272,6 +275,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "Microsoft.AspNetCore.WebUtilities": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             }
           },
           "imports": [

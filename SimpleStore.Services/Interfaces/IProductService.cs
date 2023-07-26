@@ -5,6 +5,8 @@ namespace SimpleStore.Services.Interfaces
 {
     public interface IProductService
     {
+        Task<ResponsePagination<ResponseDTOProduct>> ListAsync(int id);
+
         Task<ResponsePagination<ResponseDTOProduct>> ListAsync(string? filter, int page, int rows);
 
         Task<ResponseGeneric<ResponseDTOProduct>> FindByIdAsync(int id);

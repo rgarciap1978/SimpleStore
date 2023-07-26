@@ -1,0 +1,114 @@
+﻿@page "/buy-page/{Id:int}"
+
+@inject ProxyProduct ProxyProduct
+@inject ProxySale ProxySale
+@inject IToastService ToastService
+
+
+<h3>Tu compra</h3>
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <img src="@product.Image" alt="@product.Name" style="width:360px;" />
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            @if (Estado == EstadoCompra.Resume)
+            {
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Comment</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm">
+                                <strong>$ @product.UnitPrice</strong>
+                            </div>
+                            <div class="col-sm align-content-end" style="text-align:end">
+                                <button class="btn btn-outline-primary" @onclick="OnBuy">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }else if (Estado == EstadoCompra.Compra)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Precio</h5>
+                        <strong>@product.UnitPrice</strong>
+                        <div class="col-sm">
+                            <input type="number" id="quantity" @bind:get="Request.Quantity" @bind:set="Calcular" />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm">
+                                <span>Total</span>
+                                <span>$ @Total.ToString("N2")</span>
+                            </div>
+                            <div class="col-sm align-content-end" style="text-align:end">
+                                <button class="btn btn-outline-primary" type="submit">Pagar</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            }
+            else
+            {
+                
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public ResponseDTOProduct product { get; set; } = new ResponseDTOProduct();
+    public decimal Total { get; set; }
+    public bool IsLoading { get; set; }
+
+    private EstadoCompra Estado { get; set; } = EstadoCompra.Resume;
+    private RequestDTOSale Request { get; set; } = new RequestDTOSale();
+    private ResponseDTOSale Sale { get; set; } = new ResponseDTOSale();
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await ProxyProduct.GetByIdAsync(Id);
+    }
+
+    private void Calcular(short value)
+    {
+        Total = value * product.UnitPrice;
+        Request.Quantity = value;
+    }
+
+    private async Task OnBuy()
+    {
+        try
+        {
+            IsLoading = true;
+
+            Request.ProductId = Id;
+            var saleId = await ProxySale.CreateSale(Request);
+            Sale = await ProxySale.GetById(saleId);
+
+            Estado = EstadoCompra.Voucher;
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+}

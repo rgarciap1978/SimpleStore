@@ -1,5 +1,69 @@
-﻿@page "/"
+﻿@page "/{Id:int?}"
 
-<PageTitle>Index</PageTitle>
+@inject ProxyHome ProxyHome
+@inject ProxyProduct ProxyProduct
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
 
-<h1>Hello, world!</h1>
+<PageTitle>Simple Store</PageTitle>
+
+<div class="container">
+    <div style="margin-top:10px;flex-wrap:wrap;gap:1em;display:flex;">
+        @if (Products != null)
+        {
+            @foreach (var products in Products)
+            {
+                <ProductCardComponent OnClick="OnClickCard" Product="products" />
+            }            
+        }
+
+    </div>
+</div>
+
+<LoadingComponent IsLoading="IsLoading"></LoadingComponent>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public ICollection<ResponseDTOProduct>? Products { get; set; }
+
+    public bool IsLoading { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            if (Id != 0)
+            {
+                var response = await ProxyProduct.ListAsync(Id);
+                if (response.Success)
+                {
+                    Products = response.Data;
+                }
+            }
+            else
+            {
+                var response = await ProxyProduct.ListAsync(null, 1, 50);
+                if (response.Success)
+                {
+                    Products = response.Data;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void OnClickCard(int id)
+    {
+        NavigationManager.NavigateTo($"/buy-page/{id}");
+    }
+}

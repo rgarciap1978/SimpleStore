@@ -1,0 +1,16 @@
+﻿<div class="card" style="width:200px;height:320px;position:relative;" @onclick="()=>OnClick.InvokeAsync(Product.Id)">
+  <img class="card-img-top" src="@Product.Image" alt="@Product.Name">
+  <div class="card-body">
+    <h5 class="card-title">@Product.Name</h5>
+    <strong>$ @Product.UnitPrice</strong>
+  </div>
+</div>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public ResponseDTOProduct Product { get; set; } = new ResponseDTOProduct();
+
+    [Parameter]
+    public EventCallback<int> OnClick { get; set; }
+}

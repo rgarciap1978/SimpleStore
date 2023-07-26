@@ -21,6 +21,12 @@ namespace SimpleStore.Server.Controllers
             return Ok(await _service.ListAsync(filter, page, rows));
         }
 
+        [HttpGet("Category/{id:int}")]
+        public async Task<IActionResult> GetByCategory(int id)
+        {
+            return Ok(await _service.ListAsync(id));
+        }
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {

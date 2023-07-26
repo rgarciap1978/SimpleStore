@@ -1,4 +1,8 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject ProxyCategory ProxyCategory
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Simple Store</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -10,24 +14,43 @@
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="category/list">
-                <span class="oi oi-plus" aria-hidden="true"></span> Categoría
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="product/list">
-                <span class="oi oi-plus" aria-hidden="true"></span> Productos
-            </NavLink>
-        </div>
+
+        @if (Categories != null)
+        {
+            @foreach(var category in Categories)
+            {
+                <div class="nav-item px-3">
+                    <a class="nav-link" href="/@category.Id">
+                        <span class="oi oi-plus" aria-hidden="true"></span> @category.Name
+                    </a>
+                </div>
+            }
+        }
     </nav>
 </div>
 
+
+
 @code {
+    public ICollection<ResponseDTOCategory>? Categories { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Categories = await ProxyCategory.ListAsync();
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+    }
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

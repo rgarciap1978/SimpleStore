@@ -75,7 +75,7 @@
 
     private async Task OnDelete(int id)
     {
-        //await ProxyProduct.DeleteAsync(id);
+        await ProxyProduct.DeleteAsync(id);
         await Load();
     }
 

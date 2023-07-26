@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cNsbrA+3rFYyG49BLQcf06T0IFppgXVToXUnVFoFbG6pVEb3WbS2iwDdg9a/rEdpKCUZWCQPHy1ML2ICdFhifA==",
+  "dgSpecHash": "Px2xLwn/4l5NIDxKEuVmWoL+qcvJBzMl0dd6pugFkpu0qyL1cAV0W50dtqgXJ5veSdfMPyUHgG6Z6zYn6LXGSg==",
   "success": true,
   "projectFilePath": "C:\\Proyectos\\sources\\SimpleStore\\SimpleStore\\Server\\SimpleStore.Server.csproj",
   "expectedPackageFiles": [
@@ -23,6 +23,7 @@
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.8\\microsoft.aspnetcore.cryptography.keyderivation.7.0.8.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\7.0.8\\microsoft.aspnetcore.identity.entityframeworkcore.7.0.8.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.metadata\\7.0.7\\microsoft.aspnetcore.metadata.7.0.7.nupkg.sha512",
+    "C:\\Users\\rogar\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.2\\microsoft.data.sqlclient.5.0.2.nupkg.sha512",
@@ -65,6 +66,7 @@
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.21.0\\microsoft.identitymodel.tokens.6.21.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.jsinterop\\7.0.7\\microsoft.jsinterop.7.0.7.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.jsinterop.webassembly\\7.0.7\\microsoft.jsinterop.webassembly.7.0.7.nupkg.sha512",
+    "C:\\Users\\rogar\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",

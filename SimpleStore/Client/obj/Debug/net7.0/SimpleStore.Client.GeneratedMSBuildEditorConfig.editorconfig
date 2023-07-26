@@ -20,6 +20,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/BuyPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnV5UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Category/CategoryEditPage.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlcQ2F0ZWdvcnlFZGl0UGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -58,6 +62,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/PaginatorComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBhZ2luYXRvckNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Product/ProductCardComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFByb2R1Y3RcUHJvZHVjdENhcmRDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Product/ProductFormComponent.razor]

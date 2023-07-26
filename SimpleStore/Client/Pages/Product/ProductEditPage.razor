@@ -1,5 +1,37 @@
-﻿<h3>ProductEditPage</h3>
+﻿@page "/product/edit/{Id:int}"
+
+@using AutoMapper;
+
+@inject IMapper Mapper
+@inject NavigationManager NavigationManager
+@inject ProxyProduct ProxyProduct
+@inject ProxyCategory ProxyCategory
+
+<ProductFormComponent Categories="Categories" Model="Request" OnCancel="Cancel" OnValidSubmit="ValidaSubmit" Title="Editar producto" />
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
 
+    public RequestDTOProduct Request { get; set; } = new RequestDTOProduct();
+    public ICollection<ResponseDTOCategory> Categories { get; set; } = new List<ResponseDTOCategory>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Categories = await ProxyCategory.ListAsync();
+
+        var response = await ProxyProduct.GetByIdAsync(Id);
+        if (response != null) Request = Mapper.Map<RequestDTOProduct>(response);
+    }
+
+    private async Task ValidaSubmit()
+    {
+        await ProxyProduct.UpdateAsync(Id, Request);
+        NavigationManager.NavigateTo("/product/list");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/product/list");
+    }
 }

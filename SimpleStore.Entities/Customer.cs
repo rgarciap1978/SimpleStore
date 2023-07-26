@@ -7,5 +7,7 @@
         public string Email { get; set; } = default!;
         public int Phone { get; set; } = default!;
         public int Edad { get; set; } = default!;
+
+        public string FullName => FirstName + " " + LastName;
     }
 }

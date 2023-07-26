@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SimpleStore.Client;
 using SimpleStore.Client.Profiles;
 using SimpleStore.Client.Services;
+using SimpleStore.Client.Shared;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,6 +18,8 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(build
 // PROXIES
 builder.Services.AddScoped<ProxyCategory>();
 builder.Services.AddScoped<ProxyProduct>();
+builder.Services.AddScoped<ProxyHome>();
+builder.Services.AddScoped<ProxySale>();
 
 // MAPPERS
 builder.Services.AddAutoMapper(config => {

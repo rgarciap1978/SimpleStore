@@ -1,22 +1,17 @@
 ﻿namespace SimpleStore.Entities
 {
-    public class Sale
+    public class Sale : BaseEntity
     {
-        public DateTime SaleDate { get; set; }
-        public string DocumentNumber { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public decimal SubTotal { get; set; }
-        public decimal Taxes { get; set; }
+        public DateTime DateSale { get; set; }
+        public string Correlative { get; set; } = default!;
         public decimal Total { get; set; }
-        public bool DocumentState { get; set; }
+        public short Quantity { get; set; }
 
         public int CustomerId { get; set; }
         public Customer Customer { get; set; } = default!;
 
-        public Sale()
-        {
-            DocumentState = true;
-        }
-
+        public int ProductId { get; set; }
+        public Product Product { get; set; } = default!;
+        public DateTime SaleDate { get; set; }
     }
 }

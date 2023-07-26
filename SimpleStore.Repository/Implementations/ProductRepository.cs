@@ -1,7 +1,10 @@
-﻿using SimpleStore.DataAccess;
+﻿using Azure;
+using SimpleStore.DataAccess;
 using SimpleStore.Entities;
 using SimpleStore.Entities.Infos;
 using SimpleStore.Repository.Interfaces;
+using System;
+using System.Linq.Expressions;
 
 namespace SimpleStore.Repository.Implementations
 {
@@ -33,6 +36,22 @@ namespace SimpleStore.Repository.Implementations
                 );
         }
 
-     
+        public async Task<ICollection<ProductInfo>> ListByCategoryAsync(int id)
+        {
+            return await base.ListAsync(x => !x.IsDeleted && x.CategoryId.Equals(id),
+                predicado => new ProductInfo()
+                {
+                    Id = predicado.Id,
+                    SkuCode = predicado.SkuCode,
+                    Name = predicado.Name,
+                    UnitPrice = predicado.UnitPrice,
+                    Image = predicado.Image,
+                    Comment = predicado.Comment,
+                    Status = predicado.Status,
+                    CategoryId = predicado.Category.Id,
+                    CategoryName = predicado.Category.Name
+                });
+        }
+
     }
 }

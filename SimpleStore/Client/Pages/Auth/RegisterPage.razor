@@ -1,0 +1,73 @@
+﻿@page "/register"
+
+@layout LoginLayout
+
+@inject IToastService ToastService
+@inject NavigationManager NavigationManager
+@inject ProxyUser ProxyUser
+
+<div class="container">
+    <div class="col-lg-7">
+        <div class="card shadow-lg mt-5">
+            <div class="card-header">
+                <h3 class="text-center">Crear cuenta</h3>
+            </div>
+            <div class="card-body">
+                <EditForm Model="Request" OnValidSubmit="OnValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputEmail" type="email" placeholder="Email" @bind-value="Request.Email" autocomplete="off" />
+                        <label for="inputEmail">Email</label>
+                        <ValidationMessage For="@(()=>Request.Email)" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputFirstName" type="text" placeholder="FirstName" @bind-value="Request.FirstName" autocomplete="off" />
+                        <label for="inputFirstName">Nombre</label>
+                        <ValidationMessage For="@(()=>Request.FirstName)" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputLastName" type="text" placeholder="LastName" @bind-value="Request.LastName" autocomplete="off" />
+                        <label for="inputLastName">Apellidos</label>
+                        <ValidationMessage For="@(()=>Request.LastName)" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputPassword" type="password" placeholder="Password" @bind-value="Request.Password" autocomplete="off" />
+                        <label for="inputPassword">Password</label>
+                        <ValidationMessage For="@(()=>Request.Password)" />
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputConfirmPassword" type="password" placeholder="Confirmar password" @bind-value="Request.ConfirmPassword" autocomplete="off" />
+                        <label for="inputConfirmPassword">Confirmar password</label>
+                        <ValidationMessage For="@(()=>Request.ConfirmPassword)" />
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit">Crear cuenta</button>
+                    </div>
+                </EditForm>
+            </div>
+            <div class="card-footer text-center py-3">
+                <div class="small">
+                    <NavLink href="login">¿Tienes una cuenta? Inicia sesión</NavLink>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public RequestDTORegister Request { get; set; } = new RequestDTORegister();
+
+    private async Task OnValidSubmit()
+    {
+        try
+        {
+            await ProxyUser.Register(Request);
+            ToastService.ShowSuccess("Su cuenta fue creada.");
+            NavigationManager.NavigateTo("/login");
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+    }
+}

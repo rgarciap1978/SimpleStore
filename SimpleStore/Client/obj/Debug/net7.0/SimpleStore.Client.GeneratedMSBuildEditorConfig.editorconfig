@@ -20,6 +20,18 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Auth/LoginPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dpblBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Auth/RecoveryPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWNvdmVyeVBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Auth/RegisterPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWdpc3RlclBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/BuyPage.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnV5UGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -52,12 +64,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdFxQcm9kdWN0TmV3UGFnZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/Sale/UserSalesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZVxVc2VyU2FsZXNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Pages/SearchPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VhcmNoUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Category/CategoryFormComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENhdGVnb3J5XENhdGVnb3J5Rm9ybUNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/Category/CategoryListComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENhdGVnb3J5XENhdGVnb3J5TGlzdENvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/LoginLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Proyectos/sources/SimpleStore/SimpleStore/Client/Shared/PaginatorComponent.razor]

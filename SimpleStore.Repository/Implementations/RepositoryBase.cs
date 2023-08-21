@@ -32,17 +32,16 @@ namespace SimpleStore.Repository.Implementations
             await UpdateAsync();
         }
 
-        public virtual async Task UpdateAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
+        public virtual async Task UpdateAsync() => await _context.SaveChangesAsync();
 
-        public virtual async Task<T?> FindAsync(int id)
-        {
-            return await _context.Set<T>().FindAsync(id);
-        }
+        public virtual async Task<T?> FindAsync(int id) => await _context.Set<T>().FindAsync(id);
 
-        public virtual async Task<(ICollection<TInfo> Collection, int Total)> ListAsync<TInfo, TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TInfo>> selector, Expression<Func<T, TKey>> orderBy, int page, int rows)
+        public virtual async Task<(ICollection<TInfo> Collection, int Total)> ListAsync<TInfo, TKey>(
+            Expression<Func<T, bool>> predicate,
+            Expression<Func<T, TInfo>> selector,
+            Expression<Func<T, TKey>> orderBy,
+            int page,
+            int rows)
         {
             var collection = await _context.Set<T>()
                 .Where(predicate)

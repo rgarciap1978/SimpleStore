@@ -24,13 +24,13 @@
     public ICollection<ResponseDTOCategory> CollectionCategory { get; set; } = default!;
     public CategoryListComponent CategoryListComponent { get; set; } = default!;
     public PaginatorComponent PaginatorComponent { get; set; } = default!;
-    public Pages<ResponseDTOCategory> PagesCategory { get; set; } = default!;
+    public PagedData<ResponseDTOCategory> PagesCategory { get; set; } = default!;
     public bool IsLoading { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         CollectionCategory = new List<ResponseDTOCategory>();
-        PagesCategory = new Pages<ResponseDTOCategory>()
+        PagesCategory = new PagedData<ResponseDTOCategory>()
             {
                 CurrentPage = 1,
                 RowsPerPage = 5
@@ -50,7 +50,7 @@
                 CollectionCategory = response.Data!;
                 PagesCategory.Data = CollectionCategory;
                 PagesCategory.Count = CollectionCategory.Count;
-                PagesCategory.TotalPages = response.Pages;
+                PagesCategory.Total = response.Pages;
             }
         }
         catch (Exception ex)
@@ -87,7 +87,7 @@
 
     private async Task OnChangeSizePage()
     {
-        PaginatorComponent.PaginatorData = PagesCategory;
+        PaginatorComponent.Data = PagesCategory;
         await Load();
     }
 

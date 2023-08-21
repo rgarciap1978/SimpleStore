@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SimpleStore.Services;
 using SimpleStore.Services.Implementations;
 using SimpleStore.Services.Interfaces;
 using SimpleStore.Shared.Request;
+using SimpleStore.Shared.Response;
 using System.Security.Claims;
 
 namespace SimpleStore.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class SaleController : Controller
     {
         private readonly ISaleService _service;
@@ -38,11 +42,27 @@ namespace SimpleStore.Server.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> ListSale(string? filter, int page=1, int rows = 10)
+        public async Task<IActionResult> ListSales(string? filter, int page = 1, int rows = 10)
         {
             var email = HttpContext.User.Claims.First(f => f.Type == ClaimTypes.Email).Value;
             var response = await _service.ListAsync(email, filter, page, rows);
             return response.Success ? Ok(response) : NotFound(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> ListSalesByDateRange(string dateStart, string dateEnd, int page, int rows)
+        {
+            try
+            {
+                var email = HttpContext.User.Claims.First(f => f.Type == ClaimTypes.Email).Value;
+                var response = await _service.ListAsync(email, DateTime.Parse(dateStart), DateTime.Parse(dateEnd), page, rows);
+                return response.Success ? Ok(response) : NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogMessage(ex, nameof(ListSalesByDateRange));
+                return BadRequest(new ResponseBase { Message = ex.Message });
+            }
         }
     }
 }

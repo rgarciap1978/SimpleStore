@@ -1,9 +1,12 @@
 ﻿@page "/buy-page/{Id:int}"
 
+@using SimpleStore.Client.Auth;
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IToastService ToastService
+@inject NavigationManager NavigationManager
 @inject ProxyProduct ProxyProduct
 @inject ProxySale ProxySale
-@inject IToastService ToastService
-
 
 <h3>Tu compra</h3>
 
@@ -12,55 +15,90 @@
         <div class="col-4">
             <div class="card">
                 <div class="card-body">
-                    <img src="@product.Image" alt="@product.Name" style="width:360px;" />
+                    <img src="@Product.Image" alt="@Product.Name" style="width:360px;" />
                 </div>
             </div>
         </div>
         <div class="col-5">
-            @if (Estado == EstadoCompra.Resume)
+            @if (Status == BuyStatus.Resume)
             {
                 <div class="card" >
                     <div class="card-body">
-                        <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">@product.Comment</p>
+                        <h5 class="card-title">@Product.Name</h5>
+                        <p class="card-text">@Product.Comment</p>
                     </div>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-sm">
-                                <strong>$ @product.UnitPrice</strong>
+                                <strong>$ @Product.UnitPrice</strong>
                             </div>
                             <div class="col-sm align-content-end" style="text-align:end">
-                                <button class="btn btn-outline-primary" @onclick="OnBuy">Comprar</button>
+                                <button class="btn btn-outline-primary" @onclick="Comprar">Comprar</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            }else if (Estado == EstadoCompra.Compra)
+            }
+            else if (Status == BuyStatus.Compra)
             {
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Precio</h5>
-                        <strong>@product.UnitPrice</strong>
-                        <div class="col-sm">
-                            <input type="number" id="quantity" @bind:get="Request.Quantity" @bind:set="Calcular" />
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
+                <EditForm Model="Request" OnSubmit="OnComprar">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@Product.Name</h5>
+                            <h5 class="card-subtitle">Precio</h5>
+                            <strong>@Product.UnitPrice</strong>
                             <div class="col-sm">
-                                <span>Total</span>
-                                <span>$ @Total.ToString("N2")</span>
+                                <input type="number" id="quantity" @bind:get="Request.Quantity" @bind:set="Calcular" />
                             </div>
-                            <div class="col-sm align-content-end" style="text-align:end">
-                                <button class="btn btn-outline-primary" type="submit">Pagar</button>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span>Total</span>
+                                    <span>$ @Total.ToString("N2")</span>
+                                </div>
+                                <div class="col-sm align-content-end" style="text-align:end">
+                                    <button class="btn btn-outline-primary" type="submit">Pagar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-            </div>
+                </EditForm>
             }
             else
             {
-                
+                @if(Sale != null)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">VOUCHER</h5>
+                            <h5 class="card-subtitle">@Product.Name</h5>
+                            <div class="card-text">
+                                <span>Nro. Operation</span>
+                                <span>@Sale.VoucherNumber</span>
+                            </div>
+                            <div class="card-text">
+                                <span>Cliente</span>
+                                <span>@Sale.CustomerName</span>
+                            </div>
+                            <div class="card-text">
+                                <span>Cantidad</span>
+                                <span>@Sale.Quantity</span>
+                            </div>
+                            <div class="card-text">
+                                <span>Fecha de Pago</span>
+                                <span>@Sale.DateSale</span>
+                            </div>
+                            <div class="card-text">
+                                <span>TOTAL</span>
+                                <span>$ @Sale.Total.ToString("N2")</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/" class="btn btn-success" >Volver a comprar</a>
+                        </div>
+                    </div>
+                }
             }
         </div>
     </div>
@@ -71,26 +109,41 @@
     [Parameter]
     public int Id { get; set; }
 
-    public ResponseDTOProduct product { get; set; } = new ResponseDTOProduct();
+    public ResponseDTOProduct Product { get; set; } = new ResponseDTOProduct();
     public decimal Total { get; set; }
     public bool IsLoading { get; set; }
 
-    private EstadoCompra Estado { get; set; } = EstadoCompra.Resume;
+    private BuyStatus Status { get; set; } = BuyStatus.Resume;
     private RequestDTOSale Request { get; set; } = new RequestDTOSale();
     private ResponseDTOSale Sale { get; set; } = new ResponseDTOSale();
 
     protected override async Task OnInitializedAsync()
     {
-        product = await ProxyProduct.GetByIdAsync(Id);
+        Product = await ProxyProduct.GetByIdAsync(Id);
+    }
+
+    private async Task Comprar()
+    {
+        var auth = (AuthenticationService)AuthenticationStateProvider;
+        var claim = await auth.GetAuthenticationStateAsync();
+        if (!claim.User.Identity!.IsAuthenticated)
+        {
+            ToastService.ShowWarning("Debe iniciar sesión");
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            Status = BuyStatus.Compra;
+        }
     }
 
     private void Calcular(short value)
     {
-        Total = value * product.UnitPrice;
+        Total = value * Product.UnitPrice;
         Request.Quantity = value;
     }
 
-    private async Task OnBuy()
+    private async Task OnComprar()
     {
         try
         {
@@ -100,7 +153,7 @@
             var saleId = await ProxySale.CreateSale(Request);
             Sale = await ProxySale.GetById(saleId);
 
-            Estado = EstadoCompra.Voucher;
+            Status = BuyStatus.Voucher;
         }
         catch (Exception ex)
         {

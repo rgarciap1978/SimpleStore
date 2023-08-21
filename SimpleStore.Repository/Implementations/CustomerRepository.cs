@@ -2,8 +2,6 @@
 using SimpleStore.DataAccess;
 using SimpleStore.Entities;
 using SimpleStore.Repository.Interfaces;
-using SimpleStore.Shared.Response;
-using System.Reflection.Metadata.Ecma335;
 
 namespace SimpleStore.Repository.Implementations
 {

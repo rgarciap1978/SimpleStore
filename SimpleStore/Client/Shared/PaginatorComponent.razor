@@ -1,4 +1,4 @@
-﻿@if (PaginatorData == null)
+﻿@if (Data == null)
 {
     <p>Listo.</p>
 }
@@ -15,16 +15,16 @@ else
             </select>
         </div>
         <div class="col-md-8 col-sm-8">
-            @if (PaginatorData.TotalPages > 1)
+            @if (Data.Total > 1)
             {
                 <ul class="pagination">
                     <li class="page-item">
                         <button class="page-link btn" @onclick="OnPreviousClick"><span class="oi oi-arrow-left"></span></button>
                     </li>
-                    @for (int index = 1; index <= PaginatorData.TotalPages; index++)
+                    @for (int index = 1; index <= Data.Total; index++)
                     {
                         var currentIndex = index;
-                        if (PaginatorData.CurrentPage == index)
+                        if (Data.CurrentPage == index)
                         {
                             <li class="page-item active">
                                 <button class="page-link btn">@index</button>
@@ -48,7 +48,7 @@ else
 
 @code {
     [Parameter]
-    public PaginatorData? PaginatorData { get; set; }
+    public PaginatorData? Data { get; set; }
 
     [Parameter]
     public EventCallback OnChangePage { get; set; }
@@ -58,36 +58,36 @@ else
 
     private async Task OnPreviousClick()
     {
-        if (PaginatorData?.CurrentPage > 1)
+        if (Data?.CurrentPage > 1)
         {
-            PaginatorData.CurrentPage--;
+            Data.CurrentPage--;
             await OnChangePage.InvokeAsync();
         }
     }
 
     private async Task OnNextClick()
     {
-        if (PaginatorData?.CurrentPage < PaginatorData?.TotalPages)
+        if (Data?.CurrentPage < Data?.Total)
         {
-            PaginatorData.CurrentPage++;
+            Data.CurrentPage++;
             await OnChangePage.InvokeAsync();
         }
     }
 
     private async Task OnPageClick(int page)
     {
-        if (PaginatorData == null) return;
+        if (Data == null) return;
 
-        PaginatorData.CurrentPage = page;
+        Data.CurrentPage = page;
         await OnChangePage.InvokeAsync();
     }
 
     private void OnPageSizeClick(int size)
     {
-        if (PaginatorData == null) return;
+        if (Data == null) return;
 
-        PaginatorData.CurrentPage = 1;
-        PaginatorData.RowsPerPage = size;
+        Data.CurrentPage = 1;
+        Data.RowsPerPage = size;
         OnChangeSizePage.InvokeAsync();
     }
 

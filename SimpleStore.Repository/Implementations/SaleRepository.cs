@@ -13,15 +13,9 @@ namespace SimpleStore.Repository.Implementations
         {
         }
 
-        public async Task CreateTransaction()
-        {
-            await _context.Database.BeginTransactionAsync();
-        }
+        public async Task CreateTransaction() => await _context.Database.BeginTransactionAsync();
 
-        public async Task RollbackTransaction()
-        {
-            await _context.Database.RollbackTransactionAsync();
-        }
+        public async Task RollbackTransaction() => await _context.Database.RollbackTransactionAsync();
 
         public override async Task<int> AddAsync(Sale entity)
         {
@@ -50,7 +44,13 @@ namespace SimpleStore.Repository.Implementations
                 .FirstOrDefaultAsync();
         }
 
-        public override async Task<(ICollection<TInfo> Collection, int Total)> ListAsync<TInfo, TKey>(Expression<Func<Sale, bool>> predicate, Expression<Func<Sale, TInfo>> selector, Expression<Func<Sale, TKey>> orderBy, int page, int rows)
+        public override async Task<(ICollection<TInfo> Collection, int Total)> ListAsync<TInfo, TKey>(
+            Expression<Func<Sale, bool>> predicate,
+            Expression<Func<Sale, TInfo>> selector,
+            Expression<Func<Sale, TKey>> orderBy,
+            int page,
+            int rows
+        )
         {
             var collection = await _context.Set<Sale>()
                 .Include(p => p.Product)
@@ -58,7 +58,7 @@ namespace SimpleStore.Repository.Implementations
                 .Include(c => c.Customer)
                 .Where(predicate)
                 .OrderBy(orderBy)
-                .Skip((page-1)*rows)
+                .Skip((page - 1) * rows)
                 .Take(rows)
                 .AsNoTracking()
                 .Select(selector)

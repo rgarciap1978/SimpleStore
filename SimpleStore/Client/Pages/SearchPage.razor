@@ -1,0 +1,64 @@
+﻿@page "/search"
+
+@inject ProxyProduct ProxyProduct
+@inject NavigationManager NavigationManager
+@inject IToastService ToastService
+
+<div class="container">
+    <div style="margin-top:10px;flex-wrap:wrap;gap:1em;display:flex">
+        @if (Products != null)
+        {
+            @foreach(var product in Products)
+            {
+                <ProductCardComponent OnClick="OnClickCard" Product="product" />
+            }
+        }
+        else
+        {
+            <p>No se encontró coincidencia.</p>
+        }
+    </div>
+</div>
+
+<LoadingComponent IsLoading="IsLoading" />
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? query { get; set; }
+
+    public bool IsLoading { get; set; }
+    public ICollection<ResponseDTOProduct>? Products { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await LoadProducts();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadProducts();
+
+    }
+
+    private  async Task LoadProducts()
+    {
+        try
+        {
+            IsLoading = true;
+            var response = await ProxyProduct.ListAsync(query, 1, 5);
+            if (response.Success) Products = response.Data;
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void OnClickCard(int id) => NavigationManager.NavigateTo($"/buy-page/{id}");
+}

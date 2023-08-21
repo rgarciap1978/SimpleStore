@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
@@ -10,13 +9,17 @@ using SimpleStore.Repository.Implementations;
 using SimpleStore.Services.Interfaces;
 using SimpleStore.Services.Implementations;
 using SimpleStore.Services.Profiles;
-using SimpleStore.Shared.Response;
+using SimpleStore.DataAccess.Seeds;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // SERILOG
 var logger = new LoggerConfiguration()
-    .WriteTo.Console(LogEventLevel.Information)
+    .WriteTo.Console(LogEventLevel.Verbose)
     .WriteTo.File(
         "..\\simplestore_.log",
         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message:lj}{NewLine}{Exception}",
@@ -49,17 +52,36 @@ builder.Services.AddDbContext<SimpleStoreDBContext>(options =>
         options.EnableSensitiveDataLogging();
 });
 
+// ASP.NET IDENTITY
+builder.Services.AddIdentity<SimpleStoreUserIdentity, IdentityRole>(p =>
+{
+    p.Password.RequireDigit = true;
+    p.Password.RequireLowercase = true;
+    p.Password.RequireUppercase = false;
+    p.Password.RequireNonAlphanumeric = false;
+    p.Password.RequiredLength = 8;
+
+    p.User.RequireUniqueEmail = true;
+
+    p.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    p.Lockout.MaxFailedAccessAttempts = 3;
+    p.Lockout.AllowedForNewUsers = true;
+}).AddEntityFrameworkStores<SimpleStoreDBContext>()
+    .AddDefaultTokenProviders();
+
 // REPOSITORIES
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ISaleRepository, SaleRepository>();
 
 // SERVICES
 builder.Services.AddTransient<ICategoryService, CategoryService>();
-builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IFileUploader, FileUploader>();
+builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<ISaleService, SaleService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 // MAPPERS
 builder.Services.AddAutoMapper(config =>
@@ -68,6 +90,28 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile<ProductProfile>();
     config.AddProfile<SaleProfile>();
 });
+
+// AUTHENTICATION
+builder.Services
+    .AddAuthentication(c =>
+    {
+        c.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        c.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(c =>
+    {
+        var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!);
+        c.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -93,31 +137,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// AUTHENTICATION AND AUTHORIZATION
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
-
-//group.MapGet("/", async (ICategoryService categoryService, IProductService productService) =>
-//{
-//    var response = new ResponseDTOHome();
-//    try
-//    {
-//        var categories = await categoryService.ListAsync(null, 1, 50);
-//        var products = await productService.ListAsync(null, 1, 50);
-
-//        response.Categories = categories.Data!;
-//        response.Products = products.Data!;
-//        response.Success = true;
-
-//        return Results.Ok(response);
-//    }
-//    catch (Exception ex)
-//    {
-//        response.Message = ex.Message;
-//        return Results.BadRequest(response);
-//    }
-//});
+using(var scope = app.Services.CreateScope())
+{
+    await UserSeed.Seed(scope.ServiceProvider);
+}
 
 app.Run();

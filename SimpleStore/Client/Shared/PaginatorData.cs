@@ -4,17 +4,13 @@
     {
         public int CurrentPage { get; set; }
         public int RowsPerPage { get; set; }
-        public int TotalPages { get; set; }
+        public int Total { get; set; }
         public int Count { get; set; }
     }
 
-    public class Pages<T> : PaginatorData
+    public class PagedData<T> : PaginatorData
     {
         public ICollection<T> Data { get; set; }
-        
-        public Pages()
-        {
-            Data = new List<T>();
-        }
+        public PagedData() => Data = new List<T>();
     }
 }

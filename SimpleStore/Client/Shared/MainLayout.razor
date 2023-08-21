@@ -1,40 +1,154 @@
-﻿@inherits LayoutComponentBase
+﻿@using SimpleStore.Client.Auth;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IToastService ToastService
+@inject NavigationManager NavigationManager
+@inject ProxyUser ProxyUser
+@inject SweetAlertService Swal
+
+@inherits LayoutComponentBase
+
+<BlazoredToasts />
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
-
     <main>
         <div class="top-row px-4" style="position:relative">
             <div class="col-8 d-flex justify-content-center">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input @bind="inputSearch" type="text" class="form-control" placeholder="¿Qué estás buscando?" aria-label="¿Qué estás buscando?" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">
+                        <button class="btn btn-outline-secondary" type="button" @onclick="OnSearch">
                             <i class="oi oi-magnifying-glass"></i>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="col-4 d-flex justify-content-end" >
-                <div class="btn-group">
-                    <button type="button" class="btn btn-danger">Iniciar sesión</button>
-                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="category/list">Categorías</a>
-                        <a class="dropdown-item" href="product/list">Productos</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Compras realizadas</a>
-                    </div>
-                </div>
-
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary" @onclick="CerrarSesion">
+                                <i class="oi oi-account-logout" />
+                                Cerrar sesión
+                            </button>
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if (context.User.IsInRole("Admin"))
+                                {
+                                    <a class="dropdown-item" href="category/list">Categorías</a>
+                                    <a class="dropdown-item" href="product/list">Productos</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="sales/user">Compras realizadas</a>
+                                }
+                            </div>
+                        </div>
+                    </Authorized>
+                    <NotAuthorized>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="oi oi-account-login" />
+                                Iniciar sesión
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="card-body">
+                                    <EditForm Model="Request" OnValidSubmit="ValidLogin" Context="LoginForm">
+                                        <DataAnnotationsValidator />
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="inputEmail" type="text" placeholder="admin@gmail.com" @bind-value="Request.Username" autocomplete="off" />
+                                            <label for="inputEmail">Correo</label>
+                                            <ValidationMessage For="@(()=>Request.Username)"></ValidationMessage>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="inputPassword" type="password" placeholder="P1$$w0rd" @bind-value="Request.Password" autocomplete="off" />
+                                            <label for="inputPassword">Password</label>
+                                            <ValidationMessage For="@(()=>Request.Password)"></ValidationMessage>
+                                        </div>
+                                        <div class="d-grid gap-1 mt-4 mb-0">
+                                            <button class="btn btn-primary" type="submit">Ingresar</button>
+                                        </div>
+                                    </EditForm>
+                                </div>
+                                <div class="card-footer text-center py-3">
+                                    <div class="small">
+                                        <NavLink href="recover">¿Olvidaste tu contraseña?</NavLink>
+                                    </div>
+                                    <div class="small">
+                                        <NavLink href="register">¿No tienes cuenta? Regístrate</NavLink>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </NotAuthorized>
+                </AuthorizeView>
             </div>
         </div>
-
         <article class="content px-4">
             @Body
         </article>
     </main>
 </div>
+
+@code {
+    public RequestDTOLogin Request { get; set; } = new RequestDTOLogin();
+    private bool _isLoading = false;
+
+    public string? inputSearch { get; set; } = default!;
+    private Pages.Index PagesIndex = new Pages.Index();
+
+    private void OnSearch() { 
+        NavigationManager.NavigateTo($"/search?query={inputSearch}"); 
+    }
+
+    public async Task ValidLogin()
+    {
+        try
+        {
+            _isLoading = true;
+            var response = await ProxyUser.Login(Request);
+            if (response.Success)
+            {
+                var auth = (AuthenticationService)AuthenticationStateProvider;
+                await auth.Authenticate(response);
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                ToastService.ShowWarning(response.Message!);
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    public async Task CerrarSesion()
+    {
+        var result = await Swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "¿Está seguro de salir?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Si",
+                CancelButtonText = "No"
+            });
+
+        if (result.IsConfirmed)
+        {
+            var auth = (AuthenticationService)AuthenticationStateProvider;
+            await auth.Authenticate(null);
+            NavigationManager.NavigateTo("/", true);
+        }
+    }
+
+    
+}

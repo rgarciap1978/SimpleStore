@@ -24,13 +24,13 @@
     public ICollection<ResponseDTOProduct> CollectionProduct { get; set; } = default!;
     public ProductListComponent ProductListComponent { get; set; } = default!;
     public PaginatorComponent PaginatorComponent { get; set; } = default!;
-    public Pages<ResponseDTOProduct> PagesProduct { get; set; } = default!;
+    public PagedData<ResponseDTOProduct> PagesProduct { get; set; } = default!;
     public bool IsLoading { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         CollectionProduct = new List<ResponseDTOProduct>();
-        PagesProduct = new Pages<ResponseDTOProduct>()
+        PagesProduct = new PagedData<ResponseDTOProduct>()
             {
                 CurrentPage = 1,
                 RowsPerPage = 5
@@ -50,7 +50,7 @@
                 CollectionProduct = response.Data!;
                 PagesProduct.Data = CollectionProduct;
                 PagesProduct.Count = CollectionProduct.Count;
-                PagesProduct.TotalPages = response.Pages;
+                PagesProduct.Total = response.Pages;
             }
         }
         catch (Exception ex)
@@ -87,7 +87,7 @@
 
     private async Task OnChangeSizePage()
     {
-        PaginatorComponent.PaginatorData = PagesProduct;
+        PaginatorComponent.Data = PagesProduct;
         await Load();
     }
 

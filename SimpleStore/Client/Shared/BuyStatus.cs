@@ -1,6 +1,6 @@
 ﻿namespace SimpleStore.Client.Shared
 {
-    public enum EstadoCompra
+    public enum BuyStatus
     {
         Resume,
         Compra,

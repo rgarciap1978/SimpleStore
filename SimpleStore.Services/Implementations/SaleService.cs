@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 using SimpleStore.Entities;
 using SimpleStore.Repository.Interfaces;
 using SimpleStore.Services.Interfaces;
@@ -86,21 +88,55 @@ namespace SimpleStore.Services.Implementations
             return response;
         }
 
-        public async Task<ResponsePagination<ResponseDTOSale>> ListAsync(string email, string? filter, int page, int rows)
+        public async Task<ResponsePagination<ResponseDTOSale>> ListAsync(
+            string email, 
+            string? filter, 
+            int page, 
+            int rows
+        )
         {
             var response = new ResponsePagination<ResponseDTOSale>();
 
             try
             {
                 var (collection, total) = await _repository.ListAsync(
-                    p => p.Customer.Email.Equals(email) && p.Product.Name.Contains(filter ?? string.Empty),
-                    s => _mapper.Map<ResponseDTOSale>(s),
-                    o => o.Correlative,
+                    predicate: p => p.Customer.Email.Equals(email), // && p.Product.Name.Contains(filter ?? string.Empty),
+                    selector: s => _mapper.Map<ResponseDTOSale>(s),
+                    orderBy: o => o.Correlative,
                     page,
                     rows);
 
                 response.Data = collection;
                 response.Pages = total;
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = _logger.LogMessage(ex, nameof(ListAsync));
+            }
+
+            return response;
+        }
+
+        public async Task<ResponsePagination<ResponseDTOSale>> ListAsync(
+            string email,
+            DateTime dateStart, 
+            DateTime dateEnd,
+            int page,
+            int rows)
+        {
+            var response = new ResponsePagination<ResponseDTOSale>();
+            try
+            {
+                var (data, total) = await _repository.ListAsync(
+                    predicate: p => p.Customer.Email == email && p.SaleDate >= dateStart && p.SaleDate <= (dateEnd.AddDays(1)),
+                    selector: s => _mapper.Map<ResponseDTOSale>(s),
+                    orderBy: o => o.Correlative,
+                    page,
+                    rows);
+
+                response.Data = data;
+                response.Pages = Utils.GetPages(total, rows);
                 response.Success = true;
             }
             catch (Exception ex)

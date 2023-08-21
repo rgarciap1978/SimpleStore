@@ -1,0 +1,120 @@
+﻿@page "/sales/user"
+
+@using Microsoft.AspNetCore.Authorization;
+
+@inject IToastService ToastService
+@inject ProxySale ProxySale
+
+@attribute [Authorize]
+
+<h3>Mis compras</h3>
+
+<div class="container">
+    <div class="row g-3">
+        <div class="col-auto">
+            <label for="dateStart" class="visually-hidden">Desde</label>
+            <input type="date" id="dateStart" class="form-control" @bind="DateStart" />
+        </div>
+        <div class="col-auto">
+            <label for="dateEnd" class="visually-hidden">Hasta</label>
+            <input type="date" id="dateEnd" class="form-control" @bind="DateEnd" />
+            
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="LoadList">Buscar</button>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        @if (Sales != null)
+        {
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Voucher</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Pago</th>
+                        <th>Fecha de compra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Sales)
+                    {
+                        <tr>
+                            <td>@item.VoucherNumber</td>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Total.ToString("N2")</td>
+                            <td>@item.DateSale</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+    </div>
+</div>
+
+<PaginatorComponent OnChangePage="OnChangePage" OnChangeSizePage="OnChangeSizePage" Data="Data" @ref="Paginator" />
+<LoadingComponent IsLoading="IsLoading" />
+
+@code {
+    public bool IsLoading { get; set; }
+    public DateTime DateStart { get; set; }
+    public DateTime DateEnd { get; set; }
+    public ICollection<ResponseDTOSale>? Sales { get; set; }
+    public PagedData<ResponseDTOSale> Data { get; set; } = default!;
+    public PaginatorComponent Paginator { get; set; } = default!;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        DateStart = DateTime.Now.AddMonths(-1);
+        DateEnd = DateTime.Now;
+
+        Data = new PagedData<ResponseDTOSale>()
+            {
+                CurrentPage = 1,
+                RowsPerPage = 5
+            };
+
+        await LoadList();
+    }
+
+    private async Task LoadList()
+    {
+        try
+        {
+            IsLoading = true;
+            var response = await ProxySale.ListSalesByDateRange(DateStart.ToString("yyyy-MM-dd"), DateEnd.ToString("yyyy-MM-dd"), Data.CurrentPage, Data.RowsPerPage);
+            if (response.Success)
+            {
+                Sales = response.Data;
+                Data.Data = Sales;
+                Data.Count = Sales.Count;
+                Data.Total = response.Pages;
+            }
+        }
+        catch (Exception ex)
+        {
+            ToastService.ShowError(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task OnChangePage()
+    {
+        IsLoading = true;
+        await LoadList();
+    }
+
+    private async Task OnChangeSizePage()
+    {
+        Paginator.Data = Data;
+        await LoadList();
+    }
+}

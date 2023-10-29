@@ -109,9 +109,6 @@ namespace SimpleStore.Services.Implementations
                 var categories = await _repository.ListAsync();
                 response.Data = _mapper.Map<ICollection<ResponseDTOCategory>>(categories);
                 response.Success = true;
-
-                return response;
-
             }
             catch (Exception ex)
             {

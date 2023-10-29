@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nk2f1t7ntdfT/+NUsQZRU+ma62WvfcGSRVOuw2EaelNYi/nBg7qaVEhXgtiaS3ln5UudXX2rJsQuZekjN9K7lQ==",
+  "dgSpecHash": "Mu3tfoZ3cGOv1pyKe6y3PKuzh64xDo91cZRZZvvmV8QlHO701QsA9N8a0oZydKOOZkp8qzVnft9RgFLFRpFpdA==",
   "success": true,
   "projectFilePath": "C:\\Proyectos\\sources\\SimpleStore\\SimpleStore\\Client\\SimpleStore.Client.csproj",
   "expectedPackageFiles": [
@@ -54,7 +54,7 @@
     "C:\\Users\\rogar\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\rogar\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
-    "C:\\Users\\rogar\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.10\\microsoft.netcore.app.runtime.mono.browser-wasm.7.0.10.nupkg.sha512"
+    "C:\\Users\\rogar\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.12\\microsoft.netcore.app.runtime.mono.browser-wasm.7.0.12.nupkg.sha512"
   ],
   "logs": []
 }
